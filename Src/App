@@ -1,0 +1,98 @@
+#include <functions/functions.h>
+#include <string>
+#include <cassert>
+#include<iostream>
+
+using namespace std;
+using namespace funct;
+int main() {
+	setlocale(LC_ALL, "Rus");
+
+	Garage garage;
+	bool flag = true;
+
+	while (flag) {
+		cout << "МЕНЮ \nВведите 1, чтобы вставить элемент в список по указанному индексу; \nВведите 2, чтобы удалить элемент из списка по указанному индексу; \nВведите 3, чтобы вывести список на экран; \nВведите 4, чтобы найти в наборе первый транспорт с наибольшим значением транспортного налога; \nВведите 5, чтобы закончить.\n";
+		int choice;
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+		{cout << "\nВведите индекс элемента, который вы хотите добавить: ";
+		int index;
+		cin >> index;
+		cout << "\nВведите тип элемента: ";
+		int type;
+		cout << "\nТип элемента. Введите 1, если элемент машина; Введите 2, если элемент мотоцикл; Введите 3, если элемент грузовик. ";
+		cin >> type;
+		string model;
+		int V;
+		double S;
+		cout << "\nВведите название модели, объем двигателя V и транспортный налог S \n";
+		cin >> model;
+		cin >> V;
+		cin >> S;
+		switch (type) {
+		case 1:
+			if (index >= garage.size()) {
+				garage.add(Vehicle::create_car(model, V, S));
+			}
+			else {
+				garage.insert(index, Vehicle::create_car(model, V, S));
+			}
+			break;
+		case 2:
+			if (index >= garage.size()) {
+				garage.add(Vehicle::create_moto(model, V, S));
+			}
+			else {
+				garage.insert(index, Vehicle::create_moto(model, V, S));
+			}
+			break;
+		case 3:
+			cout << "\nВведите тоннаж грузовика T: ";
+			int T;
+			cin >> T;
+			if (index >= garage.size()) {
+				garage.add(Vehicle::create_truck(model, V, T, S));
+			}
+			else {
+				garage.insert(index, Vehicle::create_truck(model, V, T, S));
+			}
+			break;
+		default:
+			cout << "Такого типа нет";
+			break;
+		}
+		break;
+		}
+
+		case 2:
+		{cout << "\nВведите индекс элемента, который вы хотите удалить: ";
+		int index;
+		cin >> index;
+		garage.remove(index);
+		break;}
+		case 3:
+		{for (int i = 0;i < garage.size();i++) {
+			cout << garage[i];
+		}
+		break;}
+		case 4:
+		{cout << "Первый транспорт с наибольшим значением транспортного налога: ";
+		cout << garage[index_max_tax(garage)];
+		break;
+		case 5:
+			flag = false;
+			break;
+		default:
+			cout << "Вы закончили.";
+			break;
+		}
+
+		}
+
+
+	}
+	cout << "Вы закончили.";
+}
